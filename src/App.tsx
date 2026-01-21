@@ -8,37 +8,75 @@ import { FundRecommendation } from './pages/FundRecommendation';
 import { ClientManagementTable } from './pages/ClientManagementTable';
 import { AdvancedFundCuration } from './pages/AdvancedFundCuration';
 import { ClientProposalView } from './pages/ClientProposalView';
+import { MinimalAdvisorDashboard } from './pages/MinimalAdvisorDashboard';
+import { MinimalClientDetail } from './pages/MinimalClientDetail';
+import { MinimalFundCuration } from './pages/MinimalFundCuration';
+import { AdvisorOnboarding } from './pages/AdvisorOnboardingFlow';
+import { ClientOnboardingFlow } from './pages/ClientOnboardingFlow';
+import { BeginnerFundRecommendation } from './pages/BeginnerFundRecommendation';
+import { ClientSuccessScreen } from './pages/ClientSuccessScreen';
+import { AdvisorProfileDetails } from './pages/AdvisorProfileDetails';
 
 /**
- * Main App Component with Routing
+ * MFD/IFA Platform - MVP Routing
  *
- * Routes:
- * - /advisor/dashboard - Advisor control center
- * - /advisor/clients - Advanced client management table
- * - /advisor/onboarding-link - Share client onboarding link
- * - /advisor/curate/:clientId - Curate funds for a client (legacy)
- * - /advisor/curate-advanced/:clientId - Advanced fund curation interface
- * - /client/onboard - Client onboarding flow (via advisor link)
- * - /client/funds - Fund recommendation screen (legacy)
- * - /client/proposal - Client-facing proposal view (new)
+ * ADVISOR FLOW:
+ * - /advisor/onboarding - Initial setup (profile, credentials)
+ * - /advisor/dashboard - Main control center with client list
+ * - /advisor/client-detail/:clientId - Individual client view
+ * - /advisor/curate-minimal/:clientId - Select & curate funds for client
+ *
+ * CLIENT FLOW (via unique advisor link):
+ * - /client/onboarding - Risk & goal questionnaire (3 minutes)
+ * - /client/funds - Beginner-friendly fund recommendation
+ * - /client/proposal - Review & confirm investment
+ * - /client/success - Completion & next steps
+ *
+ * Legacy routes kept for backward compatibility
  */
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Advisor Routes */}
-        <Route path="/advisor/dashboard" element={<AdvisorDashboard />} />
+        {/* ========== ADVISOR FLOWS ========== */}
+
+        {/* Advisor Onboarding */}
+        <Route path="/advisor/onboarding" element={<AdvisorOnboarding />} />
+
+        {/* Minimal Advisor Dashboard (Main Hub) */}
+        <Route path="/advisor/dashboard" element={<MinimalAdvisorDashboard />} />
+
+        {/* Advisor Client Views */}
+        <Route path="/advisor/client-detail/:clientId" element={<MinimalClientDetail />} />
+        <Route path="/advisor/curate-minimal/:clientId" element={<MinimalFundCuration />} />
+
+        {/* ========== CLIENT FLOWS (Conversion Funnels) ========== */}
+
+        {/* Client Onboarding (Risk Profiling) */}
+        <Route path="/client/onboarding" element={<ClientOnboardingFlow />} />
+
+        {/* Beginner Fund Recommendation */}
+        <Route path="/client/funds" element={<BeginnerFundRecommendation />} />
+
+        {/* Investment Proposal Review */}
+        <Route path="/client/proposal" element={<ClientProposalView />} />
+
+        {/* Success Confirmation */}
+        <Route path="/client/success" element={<ClientSuccessScreen />} />
+
+        {/* Advisor Profile Details */}
+        <Route path="/advisor/profile" element={<AdvisorProfileDetails />} />
+
+        {/* ========== LEGACY ROUTES (Deprecated) ========== */}
+        <Route path="/advisor/dashboard-legacy" element={<AdvisorDashboard />} />
         <Route path="/advisor/clients" element={<ClientManagementTable />} />
         <Route path="/advisor/onboarding-link" element={<AdvisorOnboardingLink />} />
         <Route path="/advisor/curate/:clientId" element={<AdvisorCurationPanel />} />
         <Route path="/advisor/curate-advanced/:clientId" element={<AdvancedFundCuration />} />
-
-        {/* Client Routes */}
         <Route path="/client/onboard" element={<ClientOnboarding />} />
-        <Route path="/client/funds" element={<FundRecommendation />} />
-        <Route path="/client/proposal" element={<ClientProposalView />} />
+        <Route path="/client/funds-legacy" element={<FundRecommendation />} />
 
-        {/* Default redirect */}
+        {/* ========== ROOT & FALLBACKS ========== */}
         <Route path="/" element={<Navigate to="/advisor/dashboard" replace />} />
         <Route path="*" element={<Navigate to="/advisor/dashboard" replace />} />
       </Routes>

@@ -16,6 +16,8 @@ import { ClientOnboardingFlow } from './pages/ClientOnboardingFlow';
 import { BeginnerFundRecommendation } from './pages/BeginnerFundRecommendation';
 import { ClientSuccessScreen } from './pages/ClientSuccessScreen';
 import { AdvisorProfileDetails } from './pages/AdvisorProfileDetails';
+import { ClientProfile } from './pages/ClientProfile';
+import { ClientDetail } from './pages/ClientDetail';
 
 /**
  * MFD/IFA Platform - MVP Routing
@@ -48,6 +50,8 @@ function App() {
 
         {/* Advisor Client Views */}
         <Route path="/advisor/client-detail/:clientId" element={<MinimalClientDetail />} />
+        <Route path="/advisor/client/:clientId" element={<ClientDetail />} />
+        <Route path="/advisor/client/:clientId/profile" element={<ClientProfile />} />
         <Route path="/advisor/curate-minimal/:clientId" element={<MinimalFundCuration />} />
 
         {/* ========== CLIENT FLOWS (Conversion Funnels) ========== */}

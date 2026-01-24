@@ -16,6 +16,8 @@ export interface Advisor {
   experience: number; // years
   aum: number; // Assets Under Management in INR
   photo?: string;
+  email?: string;
+  phone?: string;
   clientOnboardingLink: string; // Unique link for clients
   createdAt: string;
 }

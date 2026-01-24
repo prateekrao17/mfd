@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface MinimalHeaderProps {
   title?: string;
@@ -17,6 +18,7 @@ export const MinimalHeader: React.FC<MinimalHeaderProps> = ({
   onSearch,
 }) => {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
   const [searchQuery, setSearchQuery] = React.useState('');
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +51,16 @@ export const MinimalHeader: React.FC<MinimalHeaderProps> = ({
         )}
 
         {/* Profile Section */}
-        <div className="flex-shrink-0 flex items-center gap-4">
+        <div className="flex-shrink-0 flex items-center gap-3">
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-lg transition-colors"
+            title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          >
+            {theme === 'light' ? '🌙' : '☀️'}
+          </button>
+          
           {/* Avatar */}
           <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm shadow-md" title="Profile">
             RP

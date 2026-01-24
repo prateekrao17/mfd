@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Client } from '../types';
 
 interface MinimalClientTableProps {
@@ -13,7 +14,7 @@ interface MinimalClientTableProps {
  * - Current Stage
  * - Days in Stage
  * - Last Activity
- * - Action (View button)
+ * - Actions (View Profile, Create Proposal buttons)
  * 
  * Features:
  * - Search by name/email
@@ -25,6 +26,7 @@ export const MinimalClientTable: React.FC<MinimalClientTableProps> = ({
   clients,
   onViewClient,
 }) => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [sortKey, setSortKey] = useState<'name' | 'stage' | 'activity'>('name');
@@ -209,7 +211,7 @@ export const MinimalClientTable: React.FC<MinimalClientTableProps> = ({
                   </td>
                   <td className="px-6 py-4">
                     <button
-                      onClick={() => onViewClient(client.id)}
+                      onClick={() => navigate(`/advisor/client/${client.id}`)}
                       className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors dark:bg-blue-500 dark:hover:bg-blue-600"
                     >
                       View

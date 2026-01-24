@@ -10,6 +10,8 @@ export const mockAdvisor: Advisor = {
   photo: 'https://ui-avatars.com/api/?name=Rajesh+Kumar&background=0ea5e9&color=fff',
   clientOnboardingLink: 'https://advisor.mfdplatform.com/onboard/adv_001',
   createdAt: '2024-01-15T10:00:00Z',
+  email: 'rajesh.kumar@advisorplatform.com',
+  phone: '+91 9876 543 210',
 };
 
 // Mock funds database (in real app, this would be from AMFI API or similar)
@@ -107,8 +109,34 @@ export const mockFunds: Fund[] = [
   },
 ];
 
+// Extended Client interface with KYC and portfolio data
+export interface ClientWithProfile extends Client {
+  panCard?: string;
+  kycStatus?: 'Verified' | 'Pending' | 'Incomplete';
+  kycCompletedDate?: string;
+  investorType?: 'Individual' | 'HUF' | 'Corporate';
+  investmentGoal?: string;
+  timeHorizon?: '1-3 years' | '3-5 years' | '5+ years';
+  currentInvestments?: {
+    totalAmount: number;
+    assetAllocation: {
+      equity: number;
+      debt: number;
+      hybrid: number;
+      other: number;
+    };
+    holdings: Array<{
+      fundName: string;
+      amountInvested: number;
+      currentValue: number;
+      returns: number;
+      investedDate: string;
+    }>;
+  };
+}
+
 // Mock clients (in real app, fetched from API)
-export const mockClients: Client[] = [
+export const mockClients: ClientWithProfile[] = [
   {
     id: 'client_001',
     advisorId: 'adv_001',
@@ -128,6 +156,46 @@ export const mockClients: Client[] = [
     potentialAUM: 1200000,
     tags: ['High Intent', 'Returning'],
     advisorNotes: 'Very interested in balanced funds. Follow up on tax planning.',
+    // KYC Data
+    panCard: 'ABCDE1234F',
+    kycStatus: 'Verified',
+    kycCompletedDate: '2024-01-15',
+    investorType: 'Individual',
+    investmentGoal: 'Wealth Creation',
+    timeHorizon: '5+ years',
+    // Current Portfolio
+    currentInvestments: {
+      totalAmount: 500000,
+      assetAllocation: {
+        equity: 60,
+        debt: 30,
+        hybrid: 10,
+        other: 0,
+      },
+      holdings: [
+        {
+          fundName: 'HDFC Top 100 Fund',
+          amountInvested: 200000,
+          currentValue: 245000,
+          returns: 22.5,
+          investedDate: '2022-03-10',
+        },
+        {
+          fundName: 'SBI Bluechip Fund',
+          amountInvested: 150000,
+          currentValue: 172000,
+          returns: 14.7,
+          investedDate: '2022-06-15',
+        },
+        {
+          fundName: 'ICICI Prudential Balanced Advantage',
+          amountInvested: 150000,
+          currentValue: 165500,
+          returns: 10.3,
+          investedDate: '2023-01-20',
+        },
+      ],
+    },
   },
   {
     id: 'client_002',
@@ -148,6 +216,44 @@ export const mockClients: Client[] = [
     potentialAUM: 2500000,
     tags: ['High Net Worth', 'Stalled'],
     advisorNotes: 'Need to send reminder about proposal.',
+    panCard: 'BCDEF2345G',
+    kycStatus: 'Verified',
+    kycCompletedDate: '2024-01-10',
+    investorType: 'Individual',
+    investmentGoal: 'Wealth Creation',
+    timeHorizon: '5+ years',
+    currentInvestments: {
+      totalAmount: 1200000,
+      assetAllocation: {
+        equity: 70,
+        debt: 20,
+        hybrid: 10,
+        other: 0,
+      },
+      holdings: [
+        {
+          fundName: 'HDFC Top 100 Fund',
+          amountInvested: 600000,
+          currentValue: 735000,
+          returns: 22.5,
+          investedDate: '2021-06-15',
+        },
+        {
+          fundName: 'Axis Long Term Equity Fund',
+          amountInvested: 400000,
+          currentValue: 470000,
+          returns: 17.5,
+          investedDate: '2022-01-10',
+        },
+        {
+          fundName: 'SBI Magnum Gilt Fund',
+          amountInvested: 200000,
+          currentValue: 217000,
+          returns: 8.5,
+          investedDate: '2023-06-01',
+        },
+      ],
+    },
   },
   {
     id: 'client_003',
@@ -168,6 +274,37 @@ export const mockClients: Client[] = [
     potentialAUM: 500000,
     tags: ['First Time Investor'],
     advisorNotes: 'Needs hand-holding. Prefers conservative options.',
+    panCard: 'CDEFG3456H',
+    kycStatus: 'Pending',
+    kycCompletedDate: '2024-02-01',
+    investorType: 'Individual',
+    investmentGoal: 'Retirement',
+    timeHorizon: '3-5 years',
+    currentInvestments: {
+      totalAmount: 150000,
+      assetAllocation: {
+        equity: 20,
+        debt: 70,
+        hybrid: 10,
+        other: 0,
+      },
+      holdings: [
+        {
+          fundName: 'SBI Magnum Gilt Fund',
+          amountInvested: 100000,
+          currentValue: 108500,
+          returns: 8.5,
+          investedDate: '2023-09-15',
+        },
+        {
+          fundName: 'ICICI Prudential Balanced Advantage',
+          amountInvested: 50000,
+          currentValue: 55175,
+          returns: 10.3,
+          investedDate: '2023-11-01',
+        },
+      ],
+    },
   },
   {
     id: 'client_004',
@@ -188,6 +325,51 @@ export const mockClients: Client[] = [
     potentialAUM: 3500000,
     tags: ['Converted', 'High Engagement'],
     advisorNotes: 'Excellent client. Interested in portfolio review quarterly.',
+    panCard: 'DEFGH4567I',
+    kycStatus: 'Verified',
+    kycCompletedDate: '2024-01-08',
+    investorType: 'Individual',
+    investmentGoal: 'Wealth Creation',
+    timeHorizon: '5+ years',
+    currentInvestments: {
+      totalAmount: 2000000,
+      assetAllocation: {
+        equity: 80,
+        debt: 15,
+        hybrid: 5,
+        other: 0,
+      },
+      holdings: [
+        {
+          fundName: 'HDFC Top 100 Fund',
+          amountInvested: 800000,
+          currentValue: 980000,
+          returns: 22.5,
+          investedDate: '2021-01-15',
+        },
+        {
+          fundName: 'UTI Banking & Financial Services',
+          amountInvested: 600000,
+          currentValue: 716000,
+          returns: 19.3,
+          investedDate: '2021-08-20',
+        },
+        {
+          fundName: 'Axis Long Term Equity Fund',
+          amountInvested: 400000,
+          currentValue: 469000,
+          returns: 17.3,
+          investedDate: '2022-03-10',
+        },
+        {
+          fundName: 'SBI Bluechip Fund',
+          amountInvested: 200000,
+          currentValue: 229600,
+          returns: 14.8,
+          investedDate: '2023-01-01',
+        },
+      ],
+    },
   },
   {
     id: 'client_005',
@@ -208,6 +390,44 @@ export const mockClients: Client[] = [
     potentialAUM: 1800000,
     tags: ['Hot Lead', 'Payment Pending'],
     advisorNotes: 'Payment in progress. Very responsive.',
+    panCard: 'EFGHI5678J',
+    kycStatus: 'Verified',
+    kycCompletedDate: '2024-01-19',
+    investorType: 'Individual',
+    investmentGoal: 'Tax Saving',
+    timeHorizon: '5+ years',
+    currentInvestments: {
+      totalAmount: 800000,
+      assetAllocation: {
+        equity: 50,
+        debt: 40,
+        hybrid: 10,
+        other: 0,
+      },
+      holdings: [
+        {
+          fundName: 'Axis Long Term Equity Fund',
+          amountInvested: 300000,
+          currentValue: 351000,
+          returns: 17.0,
+          investedDate: '2022-04-15',
+        },
+        {
+          fundName: 'HDFC Balanced Advantage Fund',
+          amountInvested: 300000,
+          currentValue: 330000,
+          returns: 10.0,
+          investedDate: '2023-01-20',
+        },
+        {
+          fundName: 'SBI Magnum Gilt Fund',
+          amountInvested: 200000,
+          currentValue: 217000,
+          returns: 8.5,
+          investedDate: '2023-06-01',
+        },
+      ],
+    },
   },
   {
     id: 'client_006',
@@ -228,6 +448,44 @@ export const mockClients: Client[] = [
     potentialAUM: 900000,
     tags: ['Medium Intent'],
     advisorNotes: 'Comparing with other advisors.',
+    panCard: 'FGHIJ6789K',
+    kycStatus: 'Verified',
+    kycCompletedDate: '2024-01-14',
+    investorType: 'Individual',
+    investmentGoal: 'Wealth Creation',
+    timeHorizon: '5+ years',
+    currentInvestments: {
+      totalAmount: 600000,
+      assetAllocation: {
+        equity: 75,
+        debt: 20,
+        hybrid: 5,
+        other: 0,
+      },
+      holdings: [
+        {
+          fundName: 'HDFC Top 100 Fund',
+          amountInvested: 300000,
+          currentValue: 367500,
+          returns: 22.5,
+          investedDate: '2022-09-10',
+        },
+        {
+          fundName: 'Axis Long Term Equity Fund',
+          amountInvested: 200000,
+          currentValue: 234000,
+          returns: 17.0,
+          investedDate: '2023-02-15',
+        },
+        {
+          fundName: 'SBI Magnum Gilt Fund',
+          amountInvested: 100000,
+          currentValue: 108500,
+          returns: 8.5,
+          investedDate: '2023-08-20',
+        },
+      ],
+    },
   },
   {
     id: 'client_007',
@@ -248,6 +506,37 @@ export const mockClients: Client[] = [
     potentialAUM: 300000,
     tags: ['Low Engagement', 'Stalled'],
     advisorNotes: 'Not responding to emails.',
+    panCard: 'GHIJK7890L',
+    kycStatus: 'Incomplete',
+    kycCompletedDate: undefined,
+    investorType: 'Individual',
+    investmentGoal: 'Retirement',
+    timeHorizon: '3-5 years',
+    currentInvestments: {
+      totalAmount: 100000,
+      assetAllocation: {
+        equity: 15,
+        debt: 80,
+        hybrid: 5,
+        other: 0,
+      },
+      holdings: [
+        {
+          fundName: 'SBI Magnum Gilt Fund',
+          amountInvested: 80000,
+          currentValue: 86800,
+          returns: 8.5,
+          investedDate: '2023-12-01',
+        },
+        {
+          fundName: 'ICICI Prudential Balanced Advantage',
+          amountInvested: 20000,
+          currentValue: 22070,
+          returns: 10.3,
+          investedDate: '2024-01-10',
+        },
+      ],
+    },
   },
   {
     id: 'client_008',
@@ -268,6 +557,51 @@ export const mockClients: Client[] = [
     potentialAUM: 4200000,
     tags: ['Converted', 'High Net Worth'],
     advisorNotes: 'Referral source for other clients.',
+    panCard: 'HIJKL8901M',
+    kycStatus: 'Verified',
+    kycCompletedDate: '2024-01-05',
+    investorType: 'Individual',
+    investmentGoal: 'Wealth Creation',
+    timeHorizon: '5+ years',
+    currentInvestments: {
+      totalAmount: 2500000,
+      assetAllocation: {
+        equity: 60,
+        debt: 30,
+        hybrid: 10,
+        other: 0,
+      },
+      holdings: [
+        {
+          fundName: 'HDFC Top 100 Fund',
+          amountInvested: 1000000,
+          currentValue: 1225000,
+          returns: 22.5,
+          investedDate: '2020-12-15',
+        },
+        {
+          fundName: 'ICICI Prudential Balanced Advantage',
+          amountInvested: 800000,
+          currentValue: 881200,
+          returns: 10.3,
+          investedDate: '2022-06-01',
+        },
+        {
+          fundName: 'Axis Long Term Equity Fund',
+          amountInvested: 450000,
+          currentValue: 528000,
+          returns: 17.3,
+          investedDate: '2022-12-15',
+        },
+        {
+          fundName: 'SBI Magnum Gilt Fund',
+          amountInvested: 250000,
+          currentValue: 271250,
+          returns: 8.5,
+          investedDate: '2023-03-20',
+        },
+      ],
+    },
   },
 ];
 
